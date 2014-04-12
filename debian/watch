@@ -1,0 +1,3 @@
+version=3
+
+  https://thrift.apache.org/download/ .*/thrift-(.*)\.tar\.(?:gz|bz2|xz)

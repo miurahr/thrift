@@ -16,6 +16,9 @@
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
 
+%:
+  $@
+
 PYVERS := $(shell pyversions -r)
 
 configure: configure-stamp
@@ -47,10 +50,10 @@ build-arch-stamp: configure-stamp
 
 	# Python library
 	cd $(CURDIR)/lib/py && \
-    for py in $(PYVERS); do  \
-        $$py setup.py build; \
-        $$py-dbg setup.py build; \
-    done
+	for py in $(PYVERS); do  \
+		$$py setup.py build; \
+		$$py-dbg setup.py build; \
+	done
 
 	# PHP
 	cd $(CURDIR)/lib/php/src/ext/thrift_protocol && \
@@ -147,8 +150,8 @@ install-arch:
 	# Python
 	cd $(CURDIR)/lib/py && \
 	for py in $(PYVERS); do \
-		$$py setup.py install --no-compile --root=$(CURDIR)/debian/python-thrift; \
-		$$py-dbg setup.py install --no-compile --root=$(CURDIR)/debian/python-thrift-dbg; \
+		$$py setup.py install --prefix=/usr --install-layout=deb --no-compile --root=$(CURDIR)/debian/python-thrift; \
+		$$py-dbg setup.py install --prefix=/usr --install-layout=deb --no-compile --root=$(CURDIR)/debian/python-thrift-dbg; \
 	done
 
 	find $(CURDIR)/debian/python-thrift-dbg -name "*.pyc" -print0 | xargs -0 rm -f
@@ -159,7 +162,7 @@ install-arch:
 	# PHP
 	mkdir -p $(CURDIR)/debian/php5-thrift
 	cd $(CURDIR)/lib/php && \
-		$(MAKE) DESTDIR=$(CURDIR)/debian/php5-thrift install
+		$(MAKE) DESTDIR=$(CURDIR)/debian/php5-thrift PHP_PREFIX=/usr/share/php/thrift install
 
 	# C++ and C (glib)
 	mkdir -p $(CURDIR)/debian/tmp; \

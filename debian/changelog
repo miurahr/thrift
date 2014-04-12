@@ -1,3 +1,10 @@
+thrift (0.9.1-0~ppa1) precise; urgency=low
+
+  * Debianize using git and pristine-tar
+  * Respect upstream original download package.
+
+ -- Hiroshi Miura <miurahr@linux.com>  Sat, 12 Apr 2014 10:22:03 +0900
+
 thrift (0.9.1) stable; urgency=low
 
   * update to 0.9.1
