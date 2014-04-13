@@ -171,7 +171,7 @@ install-arch:
 	cd $(CURDIR)/lib/c_glib && \
 		make DESTDIR=$(CURDIR)/debian/tmp install
 
-	dh_install --sourcedir=debian/tmp -s
+	dh_install -s
 
 
 # Must not depend on anything. This is to be called by
